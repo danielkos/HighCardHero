@@ -1,6 +1,8 @@
 package PokerHand;
 
-// All available hand ranks
+/**
+ * All available hand ranks
+ */
 public enum HandRank {
     HIGH_CARD,
     PAIR,
