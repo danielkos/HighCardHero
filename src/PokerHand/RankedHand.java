@@ -6,33 +6,11 @@ import java.util.List;
  * Class representing a poker hand which was already ranked/evaluated according to HandRank's
  * Decouples comparison of poker hands from ranking logic.
  * Applies HiGH CARD rules if no rank applicable.
+ *
+ * @param rank                 Rank of current hand
+ * @param tieBreakerCardValues Optional tiebreaker card values
  */
-public class RankedHand implements Comparable<RankedHand> {
-    // Rank of current hand
-    private final HandRank rank;
-    // Optional tiebreaker card values
-    private final List<Integer> tieBreakerCardValues;
-
-    /**
-     * Constructs a ranked hand instance
-     *
-     * @param rank Rank of this instance, see HandRank
-     * @param tieBreakerCardValues Array of tiebreaker card values
-     */
-    public RankedHand(HandRank rank, List<Integer> tieBreakerCardValues) {
-        this.rank = rank;
-        this.tieBreakerCardValues = tieBreakerCardValues;
-    }
-
-    /**
-     * Returns current hand rank
-     *
-     * @return hand rank value
-     */
-    public HandRank rank() {
-        return rank;
-    }
-
+public record RankedHand(HandRank rank, List<Integer> tieBreakerCardValues) implements Comparable<RankedHand> {
     /**
      * Compares current ranked hand vs another one
      * If no ranks present, applies HIGH CARD rules.
@@ -54,7 +32,7 @@ public class RankedHand implements Comparable<RankedHand> {
             // Compare tiebreaker card values
             final var tieBreakerCmpResult = this.tieBreakerCardValues.get(i).compareTo(o.tieBreakerCardValues.get(i));
             // Break loop if values are not equal, continue otherwise
-            if(tieBreakerCmpResult != 0 ) {
+            if (tieBreakerCmpResult != 0) {
                 compareValue = tieBreakerCmpResult;
                 break;
             };
@@ -70,6 +48,6 @@ public class RankedHand implements Comparable<RankedHand> {
      */
     @Override
     public String toString() {
-        return " (" + rank + ")";
+        return " (" + this.rank + ")";
     }
 }
