@@ -62,4 +62,14 @@ public class RankedHand implements Comparable<RankedHand> {
 
         return compareValue;
     }
+
+    /**
+     * Returns the rank of the hand as string.
+     *
+     * @return Rank as formatted string
+     */
+    @Override
+    public String toString() {
+        return " (" + rank + ")";
+    }
 }

@@ -22,4 +22,14 @@ public record Hand(List<Card> cards) {
         // Defensive copy
         this.cards = List.copyOf(cards);
     }
+
+    /**
+     * Returns the hand and it's cards as string.
+     *
+     * @return Hand as formatted string
+     */
+    @Override
+    public String toString() {
+        return cards.toString();
+    }
 }
