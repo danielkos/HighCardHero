@@ -45,7 +45,7 @@ public class HandEvaluator {
         // Check if there is a straight before checking straight flush
         boolean hasStraight = true;
         for(int i = 1; i < descendingSortedCardValues.size(); i++) {
-            if(descendingSortedCardValues.get(i) - descendingSortedCardValues.get(i - 1) != 1) {
+            if(descendingSortedCardValues.get(i - 1) - descendingSortedCardValues.get(i) != 1) {
                 hasStraight = false;
                 break;
             }
