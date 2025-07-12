@@ -48,6 +48,6 @@ public record RankedHand(HandRank rank, List<Integer> tieBreakerCardValues) impl
      */
     @Override
     public String toString() {
-        return " (" + this.rank + ")";
+        return this.rank.toString();
     }
 }
