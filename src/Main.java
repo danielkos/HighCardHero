@@ -5,38 +5,59 @@ import PokerHand.Hand;
 import PokerHand.RankedHand;
 
 import java.util.List;
-
+import java.util.Random;
 
 public class Main {
 
-    public static void main(String[] args) {
+    /**
+     * Picks randomly a card suit
+     *
+     * @return Randomly chosen card suit
+     */
+    private static CardSuit randomCardSuit() {
+        final int index =  new Random().nextInt(CardSuit.values().length);
+        return CardSuit.values()[index];
+    }
 
-        System.out.println("Hello and welcome!");
+    /**
+     * Picks randomly a card value
+     *
+     * @return Randomly chosen card value
+     */
+    private static CardValue randomCardValue() {
+        final int index =  new Random().nextInt(CardValue.values().length);
+        return CardValue.values()[index];
+    }
 
-        Hand first = new Hand(List.of(
-            new Card(CardSuit.C, CardValue.TWO),
-            new Card(CardSuit.H, CardValue.TWO),
-            new Card(CardSuit.D, CardValue.FOUR),
-            new Card(CardSuit.S, CardValue.FIVE),
-            new Card(CardSuit.C, CardValue.SEVEN)
-        ));
+    /**
+     * Returns a randomly generate hand
+     *
+     * @return A hand of 5 randomly generated cards
+     */
+    private static Hand randomHand() {
+        return new Hand(List.of(
+                new Card(randomCardSuit(), randomCardValue()),
+                new Card(randomCardSuit(), randomCardValue()),
+                new Card(randomCardSuit(), randomCardValue()),
+                new Card(randomCardSuit(), randomCardValue()),
+                new Card(randomCardSuit(), randomCardValue())));
+    }
 
-        Hand second = new Hand(List.of(
-            new Card(CardSuit.C, CardValue.THREE),
-            new Card(CardSuit.D, CardValue.THREE),
-            new Card(CardSuit.D, CardValue.THREE),
-            new Card(CardSuit.S, CardValue.SIX),
-            new Card(CardSuit.H, CardValue.EIGHT)
-        ));
-
-        // Rank both hands
-        final RankedHand firstRankedHand = HandEvaluator.evaluate(first);
-        final RankedHand secondRankedHand = HandEvaluator.evaluate(second);
+    /**
+     * Evaluates both hands and selects a winning hand.
+     * Prints hands and winning rank.
+     *
+     * @param first First competing hand
+     * @param second Second competing hand
+     */
+    public static void chooseWinningHand(Hand first, Hand second) {
+        // Rank hands
+        RankedHand firstRankedHand = HandEvaluator.evaluate(first);
+        RankedHand secondRankedHand = HandEvaluator.evaluate(second);
         // Compare ranks
-        final int result = firstRankedHand.compareTo(secondRankedHand);
+        int result = firstRankedHand.compareTo(secondRankedHand);
 
         // Display result
-        System.out.println("Competing hands: ");
         System.out.println("1: " + first);
         System.out.println("2: " + second);
 
@@ -47,5 +68,40 @@ public class Main {
         } else  {
             System.out.println("It's a tie");
         }
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("Hello and welcome!");
+        // Two predefined hands
+        final Hand first = new Hand(List.of(
+            new Card(CardSuit.C, CardValue.TWO),
+            new Card(CardSuit.H, CardValue.TWO),
+            new Card(CardSuit.D, CardValue.FOUR),
+            new Card(CardSuit.S, CardValue.FOUR),
+            new Card(CardSuit.C, CardValue.SEVEN)
+        ));
+
+        final Hand second = new Hand(List.of(
+            new Card(CardSuit.C, CardValue.THREE),
+            new Card(CardSuit.D, CardValue.THREE),
+            new Card(CardSuit.D, CardValue.THREE),
+            new Card(CardSuit.S, CardValue.SIX),
+            new Card(CardSuit.H, CardValue.SIX)
+        ));
+
+        // Two random hands
+        final Hand rndFirst = randomHand();
+        final Hand rndSecond = randomHand();
+
+        // Display result
+        System.out.println("Competing predefined hands: ");
+        chooseWinningHand(first, second);
+
+        System.out.println();
+
+        // Display result
+        System.out.println("Competing random hands: ");
+        chooseWinningHand(rndFirst, rndSecond);
     }
 }
