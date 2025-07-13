@@ -52,10 +52,10 @@ public class Main {
      */
     public static void chooseWinningHand(Hand first, Hand second) {
         // Rank hands
-        RankedHand firstRankedHand = HandEvaluator.evaluate(first);
-        RankedHand secondRankedHand = HandEvaluator.evaluate(second);
+        final RankedHand firstRankedHand = HandEvaluator.evaluate(first);
+        final RankedHand secondRankedHand = HandEvaluator.evaluate(second);
         // Compare ranks
-        int result = firstRankedHand.compareTo(secondRankedHand);
+        final int result = firstRankedHand.compareTo(secondRankedHand);
 
         // Display result
         System.out.println("1: " + first);

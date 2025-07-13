@@ -4,16 +4,13 @@ import PokerHand.Hand;
 import PokerHand.HandRank;
 import PokerHand.RankedHand;
 
-import java.util.Comparator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Evaluates a poker hand and determines it rank and potential tiebreaker card values
  */
-public class HandEvaluator {
+public final class HandEvaluator {
 
     /**
      * Evaluate a poker hand and return a ranked hand#
@@ -23,18 +20,18 @@ public class HandEvaluator {
      */
     public static RankedHand evaluate(Hand hand) {
         // Sorted cards in descending order
-        List<Card> descendingSortedCards = hand.cards()
+        final List<Card> descendingSortedCards = hand.cards()
                 .stream()
                 .sorted(Comparator.comparingInt((Card card) -> card.value().value()).reversed())
                 .toList();
         // Sorted card value in ascending order
-        List<Integer> descendingSortedCardValues = descendingSortedCards
+        final List<Integer> descendingSortedCardValues = descendingSortedCards
                 .stream()
                 .map(card -> card.value().value())
                 .sorted(Comparator.reverseOrder())
                 .toList();
         // Count occurrences of each card value
-        Map<CardValue, Long> cardValueCounts = descendingSortedCards
+        final Map<CardValue, Long> cardValueCounts = descendingSortedCards
                 .stream()
                 .collect(Collectors.groupingBy(Card::value, Collectors.counting()));
 
@@ -60,7 +57,7 @@ public class HandEvaluator {
         // 2. Check for second-highest rank FOUR_OF_A_KIND
         // Tiebreakers: Value of 4 cards
         // Find "four of a kind" if available
-        final var fourOfAKind = cardValueCounts
+        final Optional<Map.Entry<CardValue, Long>> fourOfAKind = cardValueCounts
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == 4)
@@ -77,13 +74,13 @@ public class HandEvaluator {
         // Required: three of a kind and pair
 
         // Also used for three of a kind rank
-        final var threeOfAKind = cardValueCounts
+        final Optional<Map.Entry<CardValue, Long>> threeOfAKind = cardValueCounts
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == 3)
                 .findFirst();
         // Also used for double and single pairs
-        final var allPairsDescendingOrder = cardValueCounts
+        final List<CardValue> allPairsDescendingOrder = cardValueCounts
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == 2)

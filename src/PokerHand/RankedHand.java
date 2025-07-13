@@ -27,10 +27,10 @@ public record RankedHand(HandRank rank, List<Integer> tieBreakerCardValues) impl
 
         // Otherwise check tiebreaker cards values
         // There might be multiple tiebreaker cards, e.g. 2 Pair vs 2 Pair
-        final var minSize = Math.min(this.tieBreakerCardValues.size(), o.tieBreakerCardValues.size());
+        final int minSize = Math.min(this.tieBreakerCardValues.size(), o.tieBreakerCardValues.size());
         for (int i = 0; i < minSize; i++) {
             // Compare tiebreaker card values
-            final var tieBreakerCmpResult = this.tieBreakerCardValues.get(i).compareTo(o.tieBreakerCardValues.get(i));
+            final int tieBreakerCmpResult = this.tieBreakerCardValues.get(i).compareTo(o.tieBreakerCardValues.get(i));
             // Break loop if values are not equal, continue otherwise
             if (tieBreakerCmpResult != 0) {
                 compareValue = tieBreakerCmpResult;
